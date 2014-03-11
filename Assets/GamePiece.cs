@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace AssemblyCSharp
 {
     /// <summary>
     /// Base class for the individual Pieces that players can move in the game.
     /// </summary>
-    abstract class GamePiece
+    abstract class GamePiece: MonoBehaviour
     {
 		/// <summary>
 		/// The BoardSpace this GamePiece is currently located
@@ -34,5 +35,6 @@ namespace AssemblyCSharp
 		/// can validly move to on the provided GameBoard.
 		/// </summary>
 		public abstract List<BoardSpace> GetValidMoves(GameBoard board);
+	
     }
 }
