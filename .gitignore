@@ -3,10 +3,10 @@
 # =============== #
 # Unity generated #
 # =============== #
-Temp/
-Obj/
-UnityGenerated/
-Library/
+/Temp
+/Obj
+/UnityGenerated
+/Library
  
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
@@ -33,3 +33,16 @@ ExportedObj/
 Icon?
 ehthumbs.db
 Thumbs.db
+Library/metadata/c1/c15899e7513839e40b091f1fcdf7a0fc
+Library/metadata/b3/b3943b9e50b00ca4b85983434108d868
+Library/metadata/b3/b3943b9e50b00ca4b85983434108d868
+Library/metadata/b3/b3943b9e50b00ca4b85983434108d868
+Library/metadata/b3/b3943b9e50b00ca4b85983434108d868
+Library/metadata/c1/c15899e7513839e40b091f1fcdf7a0fc
+Library/metadata/b3/b3943b9e50b00ca4b85983434108d868
+Library/metadata/ae/aed3f76a8723d4747ad6afea1b41dea6
+Library/metadata/16/160e4c863268b2e4092f5e6fbd4458b5
+Library/metadata/36/36640f302de0d664ca1f106b1a82b845
+Library/metadata/3e/3e63674c1b5aed0429d263ffe11aacf1
+*.csproj
+Library/guidmapper
