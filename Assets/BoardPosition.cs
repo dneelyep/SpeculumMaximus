@@ -8,40 +8,41 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
-namespace AssemblyCSharp
-{
+
+	//Can't we just use Vector3
+
 	/// <summary>
 	/// Class that represents a given position on the GameBoard.
 	/// </summary>
-	public class BoardPosition
+public class BoardPosition
+{
+	/// <summary>
+	/// The row in the BoardPlane that this 
+	/// BoardPosition is located in.
+	/// </summary>
+	public int Row;
+
+	/// <summary>
+	/// The column in the BoardPlane that this
+	/// BoardPosition is located in.
+	/// </summary>
+	public int Column;
+
+	/// <summary>
+	/// The vertical level that this BoardPosition
+	/// is located in.
+	/// </summary>
+	public int Level;
+
+	/// <summary>
+	/// Create a new BoardPosition at the provided row, column, and level.
+	/// </summary>
+	public BoardPosition (int row, int column, int level)
 	{
-		/// <summary>
-		/// The row in the BoardPlane that this 
-		/// BoardPosition is located in.
-		/// </summary>
-		public int Row;
-
-		/// <summary>
-		/// The column in the BoardPlane that this
-		/// BoardPosition is located in.
-		/// </summary>
-		public int Column;
-
-		/// <summary>
-		/// The vertical level that this BoardPosition
-		/// is located in.
-		/// </summary>
-		public int Level;
-
-		/// <summary>
-		/// Create a new BoardPosition at the provided row, column, and level.
-		/// </summary>
-		public BoardPosition (int row, int column, int level)
-		{
-			this.Row    = row;
-			this.Column = column;
-			this.Level  = level;
-		}
+		this.Row    = row;
+		this.Column = column;
+		this.Level  = level;
 	}
 }
+
 

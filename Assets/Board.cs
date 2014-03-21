@@ -1,32 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Board : MonoBehaviour {
+public class Board{
 
-	public List<BoardPlane> Planes;
+	public Square[,,] board;
+	public int numRows = 10;
+	public int numColumns = 10;
+	public int numLevels = 3;
 
 	/// <summary>
 	/// When started, create a default Board, with a
 	/// set of three vertically-stacked 10x10 BoardPlanes.
 	/// </summary>
-	void Start () {
-		Planes = new List<BoardPlane>();
-		Console.Out.WriteLine("Board: " + this.ToString());
-		Planes.Add(new BoardPlane());
-		Console.Out.WriteLine("Board: " + this.ToString());
-		Planes.Add(new BoardPlane());
-		Console.Out.WriteLine("Board: " + this.ToString());
-		Planes.Add(new BoardPlane());
-		Console.Out.WriteLine("Board: " + this.ToString());
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-	public override string ToString()
+	public Board()
 	{
+		//using column, row, level to match spaces to x,y,z
+		board = new Sqaure[numColumns,numRows,numLevels];
+		for (int i = 0; i < numColumns; i++)
+		{
+			for (int j= 0; j < numRows; j++)
+			{
+				for (int k = 0; k < numLevels; k++)
+				{
+					board[i,j,k] = new Square(i,j,k);
+				}
+			}
+		}
+
+		//get pieces from the physical board and put them into the logical board
+		List<Piece> pieces = new List<Piece>((Piece[])FindObjectsOfType(Piece));
+		Vector3 pos;
+		foreach(Piece piece in pieces)
+		{
+			pos = piece.position;
+			board[pos.x,pos.y,pos.z].piece = piece;
+	
+		}
+	}
+	//commenting this out since it is not used anywhere.
+	/*
+	public override string ToString()
 		string boardString = "";
 		
 		// Print the planes top-to-bottom, so that the text reflects
@@ -34,7 +48,7 @@ public class Board : MonoBehaviour {
 		for (int plane = Planes.Count - 1; plane >= 0; plane--)
 		{
 			// TODO Is this the row or the column?
-			foreach (List<BoardSpace> row in Planes[plane].Spaces)
+			foreach (List<Sqaure> row in Planes[plane].Spaces)
 			{
 				boardString += "[";
 				
@@ -57,26 +71,20 @@ public class Board : MonoBehaviour {
 		
 		return boardString;
 	}
-	
+*/
+
+	//this can now be accessed through GameState.board.board[col,row,level]
 	/// <summary>
 	/// Retrieves the BoardSpace at the
 	/// provided row, column, and level.
 	/// </summary>
-	public BoardSpace getSpace(int row, int column, int level)
+	public Square getSpace(int row, int column, int level)
 	{
 		// TODO This is a hacky way of determining valid positions.
-		if (level < Planes.Count &&
-		    row < Planes[0].Spaces.Count &&
-		    column < Planes[0].Spaces.Count)
-		{
-			return Planes[level].Spaces[row][column];
-		}
-		else
-		{
-			throw new ArgumentOutOfRangeException();
-		}
+		return this.board[column,row,level];
 	}
-	
+
+
 	/// <summary>
 	/// Gets a list of every BoardSpace that is an immediate neighbor to
 	/// the provided space. An immediate neighbor is defined as a BoardSpace
@@ -100,11 +108,11 @@ public class Board : MonoBehaviour {
 	//
 	// Then, we just repeat this process for z = {o.z-1, o.z, o.z+1}
 	/// </remarks>
-	public List<BoardSpace> getImmediateNeighboringSpaces(BoardSpace space)
+	public List<Square> getImmediateNeighboringSpaces(Square space)
 	{
 		List<int> levels;
-		List<BoardSpace> spaces = new List<BoardSpace>();
-		
+		List<Square> spaces = new List<Square>();
+
 		// TODO These bounds should be properties or functions of the board.
 		// TODO This is a hacky way of calculating this value.
 		// The maximum row that exists in the board.
@@ -112,51 +120,51 @@ public class Board : MonoBehaviour {
 		int columnBound = this.Planes[0].Spaces.Count-1;
 		
 		
-		if (space.Level == 0)      levels = new List<int>(){0, 1};
-		else if (space.Level == 1) levels = new List<int>(){0, 1, 2};
+		if (space.position.z == 0)      levels = new List<int>(){0, 1};
+		else if (space.position.z == 1) levels = new List<int>(){0, 1, 2};
 		else                       levels = new List<int>(){1, 2};
 		
 		foreach (int level in levels)
 		{
 			// TODO Find a nice simple way to do this, rather than a ton of ifs.
 			// TODO Put these checks for valid rows into a utility method.
-			if (space.Row-1 > -1 && space.Column-1 > -1)
+			if (space.position.y-1 > -1 && space.position.x-1 > -1)
 			{
-				spaces.Add(this.getSpace(space.Row-1, space.Column-1, level));
+				spaces.Add(this.getSpace(space.position.y-1, space.position.x-1, level));
 			}
-			if (space.Column-1 > -1)
+			if (space.position.x-1 > -1)
 			{
-				spaces.Add(this.getSpace(space.Row,   space.Column-1, level));
+				spaces.Add(this.getSpace(space.position.y,   space.position.x-1, level));
 			}
-			if (space.Row+1 < rowBound && space.Column-1 > -1)
+			if (space.position.y+1 < rowBound && space.position.x-1 > -1)
 			{
-				spaces.Add(this.getSpace(space.Row+1, space.Column-1, level));
+				spaces.Add(this.getSpace(space.position.y+1, space.position.x-1, level));
 			}
-			if (space.Row-1 > -1)
+			if (space.position.y-1 > -1)
 			{
-				spaces.Add(this.getSpace(space.Row-1, space.Column,   level));
-			}
-			
-			if (level != space.Level)
-			{
-				spaces.Add(this.getSpace(space.Row, space.Column, level));
+				spaces.Add(this.getSpace(space.position.y-1, space.position.x,   level));
 			}
 			
-			if (space.Row+1 < rowBound)
+			if (level != space.position.z)
 			{
-				spaces.Add(this.getSpace(space.Row+1, space.Column,   level));
+				spaces.Add(this.getSpace(space.position.y, space.position.x, level));
 			}
-			if (space.Row-1 > -1 && space.Column+1 < columnBound)
+			
+			if (space.position.y+1 < rowBound)
 			{
-				spaces.Add(this.getSpace(space.Row-1, space.Column+1, level));
+				spaces.Add(this.getSpace(space.position.y+1, space.position.x,   level));
 			}
-			if (space.Column+1 < columnBound)
+			if (space.position.y-1 > -1 && space.position.x+1 < columnBound)
 			{
-				spaces.Add(this.getSpace(space.Row,   space.Column+1, level));
+				spaces.Add(this.getSpace(space.position.y-1, space.position.x+1, level));
 			}
-			if (space.Row+1 < rowBound && space.Column+1 < columnBound)
+			if (space.position.x+1 < columnBound)
 			{
-				spaces.Add(this.getSpace(space.Row+1, space.Column+1, level));
+				spaces.Add(this.getSpace(space.position.y,   space.position.x+1, level));
+			}
+			if (space.position.y+1 < rowBound && space.position.x+1 < columnBound)
+			{
+				spaces.Add(this.getSpace(space.position.y+1, space.position.x+1, level));
 			}
 		}
 		

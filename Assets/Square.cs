@@ -6,35 +6,13 @@ public class Square {
 	public bool whiteLock = false;
 	public bool blackLock = false;
 	public Piece piece = null;
-		
-	/// <summary>
-	/// A list of all GamePieces that are
-	/// currently located in this Square.
-	/// </summary>
-	public List<Piece> Pieces;
-	
-	/// <summary>
-	/// The board this Square belongs to.
-	/// </summary>
-	public Board Board;
-	
-	/// <summary>
-	/// The row in the BoardPlane that this 
-	/// Square is located in.
-	/// </summary>
-	public int Row;
-	
-	/// <summary>
-	/// The column in the BoardPlane that this
-	/// Square is located in.
-	/// </summary>
-	public int Column;
-	
-	/// <summary>
-	/// The vertical level in the GameBoard that this
-	/// Square is located in.
-	/// </summary>
-	public int Level;
+
+	public Vector3 position;
+
+	public Square(int column, int row, int level)
+	{
+		position = new Vector3(column,row,level);
+	}
 
 	/// <summary>
 	/// Checks if the given team is allowed into the space
@@ -50,7 +28,8 @@ public class Square {
 		else
 			return false;
 	}
-	
+
+	//probably not neccessary. We can just pass the object around directly. No need to serialize it.
 	public override string ToString()
 	{
 		// TODO This needs to be updated to reflect moving Pieces to a list rather than a single object.

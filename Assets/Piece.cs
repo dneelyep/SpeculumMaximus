@@ -108,6 +108,19 @@ public abstract class Piece : MonoBehaviour {
 		if (isRotating)
 		{
 			this.transform.Rotate(rotateDirection * Vector3.forward * Time.deltaTime);
+
+			if (rotateDirection < 0 && this.transform.rotation.z < this.rotTarget)
+			{
+				if (this.rotTarget < 0)
+					this.rotTarget += 360;
+				this.transform.rotation.z = this.rotTarget;
+			}
+			else if (rotateDirection > 0 && this.transform.rotation.z > this.rotTarget)
+			{
+				if (this.rotTarget > 360)
+					this.rotTarget -= 360;
+				this.transform.rotation.z = this.rotTarget;
+			}
 		}
 	}
 
