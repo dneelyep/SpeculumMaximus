@@ -17,12 +17,18 @@ public class King: Piece
 		// TODO Fill me in.
 
 		//physically moves the piece
-		this.MovePhys(target);
+		// TODO Probably would be good to add an
+		//      override for MovePhys that takes
+		//      in a Vector3, rather than this nasty casting, etc.
+		this.MovePhys((int) target.x,
+		              (int) target.y,
+		              (int) target.z);
 		return true;
 
 	}
 
-	public override List<Square> GetValidMoves(Board board)
+	// TODO Do we want to implement this functionality eventually?
+	/*public override List<Square> GetValidMoves(Board board)
 	{
 		// TODO This is a hacky way of handling this.
 		int rowMax    = board.Planes[0].Spaces.Count - 1;
@@ -30,7 +36,7 @@ public class King: Piece
 		int levelsMax = board.Planes.Count - 1;
 		// TODO Combine this with GameBoard.getImmediateNeighboringPieces() to make it work.
 		return new List<BoardSpace>();
-	}
+	}*/
 
 	public override string ToString ()
 	{

@@ -15,7 +15,7 @@ public class Board{
 	/// </summary>
 	public Board()
 	{
-		board = new Sqaure[numRows,numColumns,numLevels];
+		board = new Square[numRows,numColumns,numLevels];
 		for (int i = 0; i < numRows; i++)
 		{
 			for (int j= 0; j < numColumns; j++)
@@ -28,12 +28,12 @@ public class Board{
 		}
 
 		//get pieces from the physical board and put them into the logical board
-		List<Piece> pieces = new List<Piece>((Piece[])FindObjectsOfType(Piece));
+		List<Piece> pieces = new List<Piece>((Piece[])Object.FindObjectsOfType(typeof(Piece)));
 		Vector3 pos;
 		foreach(Piece piece in pieces)
 		{
 			pos = piece.position;
-			board[pos.x,pos.y,pos.z].piece = piece;
+			board[(int) pos.x, (int) pos.y, (int) pos.z].piece = piece;
 	
 		}
 	}
@@ -94,8 +94,9 @@ public class Board{
 	/// </param>
 	public Square getSpace(Vector3 position)
 	{
-
-		return this.board[position.x,position.y,position.z];
+		return this.board[(int) position.x,
+		                  (int) position.y,
+		                  (int) position.z];
 	}
 
 	//might be more readable if we make a lsit of neighboring coordinates and use
@@ -129,6 +130,8 @@ public class Board{
 		List<int> levels;
 		List<Square> spaces = new List<Square>();
 
+		// TODO Replace this with simpler logic.
+		/*
 		// TODO These bounds should be properties or functions of the board.
 		// TODO This is a hacky way of calculating this value.
 		// The maximum row that exists in the board.
@@ -146,7 +149,7 @@ public class Board{
 			// TODO Put these checks for valid rows into a utility method.
 			if (space.position.x-1 > -1 && space.position.y-1 > -1)
 			{
-				spaces.Add(this.getSpace(space.position.x-1, space.position.y-1, level));
+//				spaces.Add(GameState.board.board  this.getSpace(space.position.x-1, space.position.y-1, level));
 			}
 			if (space.position.x-1 > -1)
 			{
@@ -182,7 +185,7 @@ public class Board{
 			{
 				spaces.Add(this.getSpace(space.position.y+1, space.position.x+1, level));
 			}
-		}
+		} */
 		
 		return spaces;
 	}

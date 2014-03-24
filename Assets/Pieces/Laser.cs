@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class laser : Piece {
+public class Laser : Piece {
 
 	public int laserVel = 5;
     private int rotateDir = 0;
@@ -47,9 +47,9 @@ public class laser : Piece {
 	public void fire()
 	{
 		//TODO: fill this code in
-		Instantiate (bolt,this.transform.position);
+		Debug.Log("TODO Comment this code out to get the build working - fix me!");
+		//Instantiate (bolt,this.transform.position);
 		//TODO: customiz this so the bolt goes in the right direction
-		((laserBolt)bolt).direction = new Vector3(0,0,0);
-		
+		//((laserBolt)bolt).direction = new Vector3(0,0,0);
 	}
 }

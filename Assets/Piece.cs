@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A list of the different teams that can play the game.
+/// </summary>
 public enum Team
 {
 	White,
@@ -30,7 +33,7 @@ public abstract class Piece : MonoBehaviour
 	public abstract bool Move (Vector3 newPosition);
 
 	/// <summary>
-	/// Physically moves the piece object to its new spot. Call from Move
+	/// Physically moves the Piece to its new spot. Call from Move
 	/// </summary>
 	/// <param name="newPosition"Where you are moving the object to.</param>
 	protected bool MovePhys (int row, int column, int level)
@@ -40,10 +43,8 @@ public abstract class Piece : MonoBehaviour
 		direction = target - this.transform.position;
 		isMoving = true;
 		return true;
-
 	}
-	
-	
+
 	/// <summary>
 	/// Rotates the piece physically
 	/// </summary>
@@ -105,16 +106,16 @@ public abstract class Piece : MonoBehaviour
 			if (rotateDirection < 0 && this.transform.rotation.y < this.rotTarget) {
 				if (this.rotTarget < 0)
 					this.rotTarget += 360;
-				this.transform.rotation.y = this.rotTarget;
+				this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x,
+				                                         rotTarget,
+				                                         this.transform.eulerAngles.z);
 			} else if (rotateDirection > 0 && this.transform.rotation.y > this.rotTarget) {
 				if (this.rotTarget > 360)
 					this.rotTarget -= 360;
-				this.transform.rotation.y = this.rotTarget;
+				this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x,
+				                                         rotTarget,
+				                                         this.transform.eulerAngles.z);
 			}
 		}
 	}
-	
-
-	public abstract bool Rotate (int direction);
-	
 }

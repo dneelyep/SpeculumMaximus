@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Cursor : MonoBehaviour {
 	
@@ -65,7 +66,7 @@ public class Cursor : MonoBehaviour {
 		{
 			if (GameState.CurrentState == GameState.InGameState.Selecting)
 			{
-				currentPiece = GameState.board.getSpace(this.position);
+				currentPiece = GameState.board.getSpace(this.position).piece;
 				if (currentPiece == null || currentPiece.team != GameState.currentPlayer)
 				{
 					currentPiece = null;
@@ -85,13 +86,15 @@ public class Cursor : MonoBehaviour {
 		//rotation
 		else if (GameState.CurrentState == GameState.InGameState.Moving && Input.GetKeyDown(KeyCode.LeftArrow))
 		{
-			currentPiece.Rotate(-1);
+			Debug.Log("Code commented out to get the build working - fix me!");
+			//currentPiece.Rotate(-1);
 			Fire();
 		}
 		
 		else if (GameState.CurrentState == GameState.InGameState.Moving && Input.GetKeyDown(KeyCode.RightArrow))
 		{
-			currentPiece.Rotate(1);
+			Debug.Log("Code commented out to get the build working - fix me!");
+			//currentPiece.Rotate(1);
 			Fire();
 		}
 		
@@ -117,9 +120,9 @@ public class Cursor : MonoBehaviour {
 	/// </param>
 	public void move(int delRow, int delCol, int delLevel)
 	{
-		this.Transform.translate(new Vector3(delCol, delLevel, delRow));
+		this.transform.Translate(new Vector3(delCol, delLevel, delRow));
 		if (delLevel != 0)
-			this.cam.Transform.translate( new Vector3(0,delLevel,0));
+			this.cam.transform.Translate(new Vector3(0, delLevel,0));
 		return;
 	}
 	
@@ -135,10 +138,10 @@ public class Cursor : MonoBehaviour {
 		switch (GameState.currentPlayer)
 		{
 		case (Team.White):
-			((laser)GameState.board.getSpace(this.whiteLaser).piece).Fire();
+			((Laser)GameState.board.getSpace(this.whiteLaser).piece).fire();
 			break;
 		case (Team.Black):
-			((laser)GameState.board.getSpace(this.blackLaser).piece).Fire();
+			((Laser)GameState.board.getSpace(this.blackLaser).piece).fire();
 			break;
 		default:
 			throw new Exception("we don't know whose turn it's supposed to be right now");

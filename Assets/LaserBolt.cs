@@ -24,7 +24,7 @@ public class LaserBolt : MonoBehaviour {
 	//put code to signal to main program that laser section is finished.
 	void OnDestroy()
 	{
-		GameState.InGameState = GameState.InGameState.Moving;
+		GameState.CurrentState = GameState.InGameState.Moving;
 		GameState.changePlayer();
 	}
 }
