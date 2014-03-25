@@ -52,4 +52,9 @@ public class Laser : Piece {
 		//TODO: customiz this so the bolt goes in the right direction
 		//((laserBolt)bolt).direction = new Vector3(0,0,0);
 	}
+	
+	public override bool Rotate(int direction)
+	{
+		return true;
+	}
 }

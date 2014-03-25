@@ -36,6 +36,8 @@ public class Board{
 			board[(int) pos.x, (int) pos.y, (int) pos.z].piece = piece;
 	
 		}
+		
+		Debug.Log("board loaded");
 	}
 	//commenting this out since it is not used anywhere.
 	/*

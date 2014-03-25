@@ -65,4 +65,10 @@ public class King: Piece
 		}
 		GameState.CurrentState= GameState.InGameState.Victory;
 	}
+	
+	public override bool Rotate(int direction)
+	{
+		//stub code.
+		return true;
+	}
 }
