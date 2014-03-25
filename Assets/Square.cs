@@ -9,7 +9,7 @@ public class Square {
 
 	public Vector3 position;
 
-	public Square(int column, int row, int level)
+	public Square(int row, int column, int level)
 	{
 		position = new Vector3(column,row,level);
 	}

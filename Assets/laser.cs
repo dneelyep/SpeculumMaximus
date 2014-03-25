@@ -5,7 +5,7 @@ public class laser : Piece {
 
 	public int laserVel = 5;
     private int rotateDir = 0;
-
+	public Transform bolt;
 
 	// Use this for initialization
     void Start()
@@ -44,4 +44,12 @@ public class laser : Piece {
 		return false;
 	}
 	
+	public void fire()
+	{
+		//TODO: fill this code in
+		Instantiate (bolt,this.transform.position);
+		//TODO: customiz this so the bolt goes in the right direction
+		((laserBolt)bolt).direction = new Vector3(0,0,0);
+		
+	}
 }

@@ -15,11 +15,10 @@ public class Board{
 	/// </summary>
 	public Board()
 	{
-		//using column, row, level to match spaces to x,y,z
-		board = new Sqaure[numColumns,numRows,numLevels];
-		for (int i = 0; i < numColumns; i++)
+		board = new Sqaure[numRows,numColumns,numLevels];
+		for (int i = 0; i < numRows; i++)
 		{
-			for (int j= 0; j < numRows; j++)
+			for (int j= 0; j < numColumns; j++)
 			{
 				for (int k = 0; k < numLevels; k++)
 				{
@@ -81,10 +80,27 @@ public class Board{
 	public Square getSpace(int row, int column, int level)
 	{
 		// TODO This is a hacky way of determining valid positions.
-		return this.board[column,row,level];
+		return this.board[row,column,level];
+	}
+	
+	/// <summary>
+	/// Gets the square at the specfied position
+	/// </summary>
+	/// <returns>
+	/// A square object
+	/// </returns>
+	/// <param name='position'>
+	/// Position.
+	/// </param>
+	public Square getSpace(Vector3 position)
+	{
+
+		return this.board[position.x,position.y,position.z];
 	}
 
-
+	//might be more readable if we make a lsit of neighboring coordinates and use
+	//List.removeAll(predicate) to get rid of the ones that don't eist
+	
 	/// <summary>
 	/// Gets a list of every BoardSpace that is an immediate neighbor to
 	/// the provided space. An immediate neighbor is defined as a BoardSpace
@@ -128,9 +144,9 @@ public class Board{
 		{
 			// TODO Find a nice simple way to do this, rather than a ton of ifs.
 			// TODO Put these checks for valid rows into a utility method.
-			if (space.position.y-1 > -1 && space.position.x-1 > -1)
+			if (space.position.x-1 > -1 && space.position.y-1 > -1)
 			{
-				spaces.Add(this.getSpace(space.position.y-1, space.position.x-1, level));
+				spaces.Add(this.getSpace(space.position.x-1, space.position.y-1, level));
 			}
 			if (space.position.x-1 > -1)
 			{
