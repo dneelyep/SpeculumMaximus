@@ -31,6 +31,8 @@ public abstract class Piece : MonoBehaviour
 	private bool isRotating = false;
 
 	public abstract bool Move (Vector3 newPosition);
+	
+	public abstract bool Rotate(int direction);
 
 	/// <summary>
 	/// Physically moves the Piece to its new spot. Call from Move

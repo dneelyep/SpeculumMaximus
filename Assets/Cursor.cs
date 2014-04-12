@@ -22,7 +22,9 @@ public class Cursor : MonoBehaviour {
 		GameState.currentPlayer = Team.White;
 		GameState.CurrentState = GameState.InGameState.Selecting;
 		GameState.board = new Board();
-		cam = GameObject.Find("mainCamera");
+		cam = GameObject.Find("Main Camera");
+		if (cam == null)
+			Debug.LogError("camera not found");
 	}
 	
 	// Update is called once per frame
@@ -30,34 +32,34 @@ public class Cursor : MonoBehaviour {
 		
 		
 		//checks for movement key presses
-		if (Input.GetKeyDown(KeyCode.W) && this.position.x < GameState.board.numRows -1)
-		{
-			this.position.x += 1;
-			this.move(1,0,0);
-		}
-		else if (Input.GetKeyDown(KeyCode.S) && this.position.x > 0)
-		{
-			this.position.x -= 1;
-			this.move(-1,0,0);
-		}
-		else if (Input.GetKeyDown(KeyCode.A) && this.position.y < GameState.board.numColumns -1)
-		{
-			this.position.y += 1;
-			this.move(0,1,0);
-		}
-		else if (Input.GetKeyDown(KeyCode.D) && this.position.y > 0)
-		{
-			this.position.y -= 1;
-			this.move(0,-1,0);
-		}
-		else if (Input.GetKeyDown(KeyCode.UpArrow) && this.position.z < GameState.board.numLevels -1)
+		if (Input.GetKeyDown(KeyCode.W) && this.position.z < GameState.board.numRows -1)
 		{
 			this.position.z += 1;
-			this.move(0,0,1);
+			this.move(1,0,0);
 		}
-		else if (Input.GetKeyDown(KeyCode.DownArrow) && this.position.z > 0)
+		else if (Input.GetKeyDown(KeyCode.S) && this.position.z > 0)
 		{
 			this.position.z -= 1;
+			this.move(-1,0,0);
+		}
+		else if (Input.GetKeyDown(KeyCode.A) && this.position.x > 0)
+		{
+			this.position.x -= 1;
+			this.move(0,-1,0);
+		}
+		else if (Input.GetKeyDown(KeyCode.D) && this.position.x <GameState.board.numColumns -1)
+		{
+			this.position.x += 1;
+			this.move(0,1,0);
+		}
+		else if (Input.GetKeyDown(KeyCode.UpArrow) && this.position.y < GameState.board.numLevels -1)
+		{
+			this.position.y += 1;
+			this.move(0,0,1);
+		}
+		else if (Input.GetKeyDown(KeyCode.DownArrow) && this.position.y > 0)
+		{
+			this.position.y -= 1;
 			this.move(0,0,-1);
 		}
 		
@@ -120,9 +122,15 @@ public class Cursor : MonoBehaviour {
 	/// </param>
 	public void move(int delRow, int delCol, int delLevel)
 	{
+		print(this.position);
 		this.transform.Translate(new Vector3(delCol, delLevel, delRow));
 		if (delLevel != 0)
+		{
+			Debug.Log(this.cam.camera.nearClipPlane);
 			this.cam.transform.Translate(new Vector3(0, delLevel,0));
+			Debug.Log (this.camera.transform.position.y);
+
+		}
 		return;
 	}
 	
