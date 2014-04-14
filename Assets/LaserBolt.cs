@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class LaserBolt : MonoBehaviour {
@@ -24,7 +24,7 @@ public class LaserBolt : MonoBehaviour {
 	//put code to signal to main program that laser section is finished.
 	void OnDestroy()
 	{
-		GameState.CurrentState = GameState.InGameState.Moving;
-		GameState.changePlayer();
+		Game.CurrentState = Game.State.Selecting;
+		Game.changePlayer();
 	}
 }

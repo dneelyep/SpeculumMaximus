@@ -4,40 +4,14 @@ using System.Collections;
 public class Laser : Piece {
 
 	public int laserVel = 5;
-    private int rotateDir = 0;
-	public Transform bolt;
+	public LaserBolt bolt;
 
 	// Use this for initialization
     void Start()
-    {
-        switch (this.team)
-        {
-            case (Team.White):
-                this.orientation = new Vector3(0, 1, 0);
-                break;
-            case (Team.Black):
-                this.orientation = new Vector3(0, -1, 0);
-                break;
-            default:
-                this.orientation = new Vector3(0, 0, 0);
-                break;
-        }
-        return;
+	{
 
     }
-	// Update is called once per frame
-	void Update () {
-        //check if we are rotating.
-        if (rotateDir != -1)
-        {
-            //rotate the piece. If we hare 
-            this.transform.Rotate(new Vector3(0, 0, 1) * rotateVel * rotateDir);
-            if ((int)this.transform.rotation.x % 90 == 0)
-            {
-                this.rotateDir = 0;
-            }
-        }
-	}
+
 
 	public override bool Move(Vector3 direction)
 	{
@@ -48,9 +22,9 @@ public class Laser : Piece {
 	{
 		//TODO: fill this code in
 		Debug.Log("TODO Comment this code out to get the build working - fix me!");
-		//Instantiate (bolt,this.transform.position);
+		bolt = (LaserBolt) Instantiate( Resources.Load("Bolt",typeof(LaserBolt)),this.transform.position, Quaternion.identity);
 		//TODO: customiz this so the bolt goes in the right direction
-		//((laserBolt)bolt).direction = new Vector3(0,0,0);
+		bolt.direction = new Vector3(1,0,0);
 	}
 	
 	public override bool Rotate(int direction)

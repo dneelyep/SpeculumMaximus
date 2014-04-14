@@ -21,103 +21,78 @@ public abstract class Piece : MonoBehaviour
 	protected Board board{ get; set; }
 
 	//parameters for controling movement of game objects
-	public float moveVel = 1f;
-	public float rotateVel = 90;
-	private bool isMoving = false;
-	private Vector3 direction;
-	protected int rotateDirection;
+	public float moveRate = 1f;
 	protected Vector3 target;
-	protected int rotTarget;
-	private bool isRotating = false;
-
+	protected Quaternion rotTarget;
+	private float t=1.0f;
+	private Vector3 oldLoc;
+	private Quaternion oldRot;
+	
+	
+	
+	void Start()
+	{
+		oldLoc = this.transform.position;
+		oldRot = this.transform.rotation;
+	}
+	
+	
 	public abstract bool Move (Vector3 newPosition);
 	
 	public abstract bool Rotate(int direction);
 
 	/// <summary>
-	/// Physically moves the Piece to its new spot. Call from Move
+	/// Move the piece in world space
 	/// </summary>
-	/// <param name="newPosition"Where you are moving the object to.</param>
-	protected bool MovePhys (int row, int column, int level)
+	/// <param name='row'>
+	/// New row
+	/// </param>
+	/// <param name='column'>
+	/// New Column
+	/// </param>
+	/// <param name='level'>
+	/// New Level
+	/// </param>
+	protected void MovePhys (Vector3 newPosition)
 	{
-		
-		target = new Vector3 (column, level, row);
-		direction = target - this.transform.position;
-		isMoving = true;
-		return true;
+		//get the new position
+		target = new Vector3(this.transform.position.x + newPosition.y - this.position.y, this.transform.position.y + newPosition.z - this.position.z, this.position.z + newPosition.x - this.position.x);
+		t = 0;
+		Game.CurrentState = Game.State.FiringLaser;
+		return;
 	}
 
 	/// <summary>
 	/// Rotates the piece physically
 	/// </summary>
-	/// <returns>
-	/// true
-	/// </returns>
 	/// <param name='direction'>
 	/// 1 for clockwise, -1 for counterclockwise
 	/// </param>
-	protected bool RotatePhys (int direction)
+	protected void RotatePhys (int direction)
 	{
-		rotTarget = (int)this.transform.rotation.y + 90 * direction;
-		this.isRotating = true;
-		return true;
+		rotTarget = Quaternion.Euler(0,90 * direction,0) * this.transform.rotation;
+		t = 0;
+		Game.CurrentState = Game.State.FiringLaser;
+		return;
 	}
 
-	void onUpdate ()
+	void Update ()
 	{
-		if (isMoving) {
-			this.transform.Translate (moveVel * direction * Time.deltaTime);
+		if (t < 1.0)
+		{
+			t+= Time.deltaTime * moveRate;
+			this.transform.position = Vector3.Lerp(this.oldLoc,this.target, t);
+			this.transform.rotation = Quaternion.Slerp(this.oldRot, this.rotTarget, t);
+		 	
+			if (t>= 1)
+			{
+				oldLoc = this.transform.position;
+				oldRot = this.transform.rotation;
 
-			//Check end conditions, and correct if piece has moved past target
-			if (direction.x != 0) {
-				if (direction.x < 0 && this.transform.position.x <= this.target.x) {
-					this.transform.position = this.target;
-					this.isMoving = false;
-				} else if (direction.x > 0 && this.transform.position.x >= this.target.x) {
-					this.transform.position = this.target;
-					this.isMoving = false;
-				}
-
-			} else if (direction.y != 0) {
-				if (direction.y < 0 && this.transform.position.y <= this.target.y) {
-					this.transform.position = this.target;
-					this.isMoving = false;
-				} else if (direction.y > 0 && this.transform.position.y >= this.target.y) {
-					this.transform.position = this.target;
-					this.isMoving = false;
-				}
-				
-			} else if (direction.z != 0) {
-				if (direction.z < 0 && this.transform.position.z <= this.target.z) {
-					this.transform.position = this.target;
-					this.isMoving = false;
-				} else if (direction.z > 0 && this.transform.position.z >= this.target.z) {
-					this.transform.position = this.target;
-					this.isMoving = false;
-				}
-				
+				Game.Fire();
 			}
-
-			return;
+			
 		}
-		
-		//code if we are rotating
-		if (isRotating) {
-			this.transform.Rotate (rotateDirection * Vector3.up * Time.deltaTime);
-			//if we've overshot, correct rotation
-			if (rotateDirection < 0 && this.transform.rotation.y < this.rotTarget) {
-				if (this.rotTarget < 0)
-					this.rotTarget += 360;
-				this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x,
-				                                         rotTarget,
-				                                         this.transform.eulerAngles.z);
-			} else if (rotateDirection > 0 && this.transform.rotation.y > this.rotTarget) {
-				if (this.rotTarget > 360)
-					this.rotTarget -= 360;
-				this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x,
-				                                         rotTarget,
-				                                         this.transform.eulerAngles.z);
-			}
-		}
+		return;
 	}
 }

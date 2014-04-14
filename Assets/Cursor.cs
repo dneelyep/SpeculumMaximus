@@ -7,9 +7,7 @@ public class Cursor : MonoBehaviour {
 	//vector representing logical position (row,column,level)
 	public Vector3 position = new Vector3(0,0,0);
 	
-	//the logical positions of the laser for eaach team.
-	public Vector3 whiteLaser = new Vector3(0,9,0);
-	public Vector3 blackLaser = new Vector3(9,0,0);
+
 	
 	//the currently selected piece
 	private Piece currentPiece = null;
@@ -19,9 +17,9 @@ public class Cursor : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		GameState.currentPlayer = Team.White;
-		GameState.CurrentState = GameState.InGameState.Selecting;
-		GameState.board = new Board();
+		Game.currentPlayer = Team.White;
+		Game.CurrentState = Game.State.Selecting;
+		Game.board = new Board();
 		cam = GameObject.Find("Main Camera");
 		if (cam == null)
 			Debug.LogError("camera not found");
@@ -32,7 +30,7 @@ public class Cursor : MonoBehaviour {
 		
 		
 		//checks for movement key presses
-		if (Input.GetKeyDown(KeyCode.W) && this.position.z < GameState.board.numRows -1)
+		if (Input.GetKeyDown(KeyCode.W) && this.position.z < Game.board.numRows -1)
 		{
 			this.position.z += 1;
 			this.move(1,0,0);
@@ -47,12 +45,12 @@ public class Cursor : MonoBehaviour {
 			this.position.x -= 1;
 			this.move(0,-1,0);
 		}
-		else if (Input.GetKeyDown(KeyCode.D) && this.position.x <GameState.board.numColumns -1)
+		else if (Input.GetKeyDown(KeyCode.D) && this.position.x <Game.board.numColumns -1)
 		{
 			this.position.x += 1;
 			this.move(0,1,0);
 		}
-		else if (Input.GetKeyDown(KeyCode.UpArrow) && this.position.y < GameState.board.numLevels -1)
+		else if (Input.GetKeyDown(KeyCode.UpArrow) && this.position.y < Game.board.numLevels -1)
 		{
 			this.position.y += 1;
 			this.move(0,0,1);
@@ -66,45 +64,42 @@ public class Cursor : MonoBehaviour {
 		//selection/confirmation key press
 		else if (Input.GetKeyDown(KeyCode.Space))
 		{
-			if (GameState.CurrentState == GameState.InGameState.Selecting)
+			if (Game.CurrentState == Game.State.Selecting)
 			{
-				currentPiece = GameState.board.getSpace(this.position).piece;
-				if (currentPiece == null || currentPiece.team != GameState.currentPlayer)
+				currentPiece = Game.board.getSpace(this.position).piece;
+				if (currentPiece == null || currentPiece.team != Game.currentPlayer)
 				{
 					currentPiece = null;
 				}
 				else
-					GameState.CurrentState = GameState.InGameState.Moving;
+					Game.CurrentState = Game.State.Moving;
 			}
 			
-			else if (GameState.CurrentState == GameState.InGameState.Moving)
+			else if (Game.CurrentState == Game.State.Moving)
 			{
-				if (currentPiece.Move(position))
-					Fire();
+				currentPiece.Move(position);
 					
 			}
 		}
 		
 		//rotation
-		else if (GameState.CurrentState == GameState.InGameState.Moving && Input.GetKeyDown(KeyCode.LeftArrow))
+		else if (Game.CurrentState == Game.State.Moving && Input.GetKeyDown(KeyCode.LeftArrow))
 		{
 			Debug.Log("Code commented out to get the build working - fix me!");
 			//currentPiece.Rotate(-1);
-			Fire();
 		}
 		
-		else if (GameState.CurrentState == GameState.InGameState.Moving && Input.GetKeyDown(KeyCode.RightArrow))
+		else if (Game.CurrentState == Game.State.Moving && Input.GetKeyDown(KeyCode.RightArrow))
 		{
 			Debug.Log("Code commented out to get the build working - fix me!");
 			//currentPiece.Rotate(1);
-			Fire();
 		}
 		
 		//cancel move
-		else if (Input.GetKeyDown(KeyCode.Escape) && GameState.CurrentState == GameState.InGameState.Moving)
+		else if (Input.GetKeyDown(KeyCode.Escape) && Game.CurrentState == Game.State.Moving)
 		{
 			this.currentPiece = null;
-			GameState.CurrentState = GameState.InGameState.Selecting;
+			Game.CurrentState = Game.State.Selecting;
 		}
 	}
 	
@@ -135,26 +130,7 @@ public class Cursor : MonoBehaviour {
 	}
 	
 	
-	/// <summary>
-	/// Fire the current team's laser.
-	/// </summary>
-	/// <exception cref='Exception'>
-	/// Throws an exception when it doesbn't know whose turn it is (should never happen)
-	/// </exception>
-	public void Fire()
-	{
-		switch (GameState.currentPlayer)
-		{
-		case (Team.White):
-			((Laser)GameState.board.getSpace(this.whiteLaser).piece).fire();
-			break;
-		case (Team.Black):
-			((Laser)GameState.board.getSpace(this.blackLaser).piece).fire();
-			break;
-		default:
-			throw new Exception("we don't know whose turn it's supposed to be right now");
-		}
-	}
+
 		
 				
 }

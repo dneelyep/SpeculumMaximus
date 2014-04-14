@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,15 +15,19 @@ public class King: Piece
 	public override bool Move(Vector3 target)
 	{
 		// TODO Fill me in.
-
+		if (Game.board.getSpace(target).piece == null)
+		{
+			Game.board.getSpace(this.position).piece = null;
+			this.MovePhys(target);
+			Game.board.getSpace(target).piece = this;
+			return true;
+		}
 		//physically moves the piece
 		// TODO Probably would be good to add an
 		//      override for MovePhys that takes
 		//      in a Vector3, rather than this nasty casting, etc.
-		this.MovePhys((int) target.x,
-		              (int) target.y,
-		              (int) target.z);
-		return true;
+		
+		return false;
 
 	}
 
@@ -47,7 +51,7 @@ public class King: Piece
 	{
 		Destroy(other.gameObject);
 
-		Destroy (this);
+		Destroy(this);
 	}
 
 	void OnDestroy()
@@ -55,15 +59,15 @@ public class King: Piece
 		switch (this.team)
 		{
 		case (Team.Black):
-			GameState.currentPlayer = Team.White;
+			Game.currentPlayer = Team.White;
 			break;
 		case (Team.White):
-			GameState.currentPlayer = Team.White;
+			Game.currentPlayer = Team.White;
 			break;
 		default:
 			throw new Exception("An unknown team's King has been destroyed. You broke the game somehow.");
 		}
-		GameState.CurrentState= GameState.InGameState.Victory;
+		Game.CurrentState = Game.State.Victory;
 	}
 	
 	public override bool Rotate(int direction)
