@@ -12,16 +12,16 @@ public enum Team
 
 public abstract class Piece : MonoBehaviour
 {
-	public Vector3 position{ get; protected set; }
+	public Vector3 position;
 
-	public Vector3 orientation{ get; protected set; }
+	public Vector3 orientation;
 
-	public Team team{ get; private set; }
+	public Team team;
 
 	protected Board board{ get; set; }
 
 	//parameters for controling movement of game objects
-	public float moveRate = 1f;
+	public static float moveRate = 1f;
 	protected Vector3 target;
 	protected Quaternion rotTarget;
 	private float t=1.0f;
@@ -32,8 +32,12 @@ public abstract class Piece : MonoBehaviour
 	
 	void Start()
 	{
+		Debug.Log (this.transform.position);
 		oldLoc = this.transform.position;
+		target = oldLoc;
 		oldRot = this.transform.rotation;
+		rotTarget = oldRot;
+
 	}
 	
 	
@@ -80,6 +84,7 @@ public abstract class Piece : MonoBehaviour
 	{
 		if (t < 1.0)
 		{
+			Debug.Log("moving");
 			t+= Time.deltaTime * moveRate;
 			this.transform.position = Vector3.Lerp(this.oldLoc,this.target, t);
 			this.transform.rotation = Quaternion.Slerp(this.oldRot, this.rotTarget, t);
