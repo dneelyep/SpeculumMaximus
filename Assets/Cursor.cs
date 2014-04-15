@@ -6,9 +6,7 @@ public class Cursor : MonoBehaviour {
 	
 	//vector representing logical position (row,column,level)
 	public Vector3 position = new Vector3(0,0,0);
-	
 
-	
 	//the currently selected piece
 	private Piece currentPiece = null;
 	
@@ -27,8 +25,6 @@ public class Cursor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		
 		//checks for movement key presses
 		if (Input.GetKeyDown(KeyCode.W) && this.position.z < Game.board.numRows -1)
 		{
@@ -126,11 +122,22 @@ public class Cursor : MonoBehaviour {
 			Debug.Log (this.camera.transform.position.y);
 
 		}
-		return;
-	}
-	
-	
 
-		
-				
+		// Highlight the cursor appropriately, depending on which (if
+		// any) pieces the cursor is over top of.
+		if (Game.board.getSpace(this.position).piece != null) {
+			Debug.Log("Found a piece!");
+			// TODO Here, we should check if the team's piece is a
+			//      member of the player's team or not.
+			if (Game.board.getSpace(this.position).piece.team == Team.Black) {
+				this.renderer.material.color = Color.yellow;
+			} else {
+				this.renderer.material.color = Color.red;
+			}
+		} else {
+			this.renderer.material.color = Color.green;
+		}
+
+		return;
+	}				
 }
