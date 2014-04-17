@@ -30,27 +30,27 @@ public class Cursor : MonoBehaviour {
 		
 		
 		//checks for movement key presses
-		if (Input.GetKeyDown(KeyCode.W) && this.position.z < Game.board.numRows -1)
-		{
-			this.position.z += 1;
-			this.move(1,0,0);
-		}
-		else if (Input.GetKeyDown(KeyCode.S) && this.position.z > 0)
-		{
-			this.position.z -= 1;
-			this.move(-1,0,0);
-		}
-		else if (Input.GetKeyDown(KeyCode.A) && this.position.x > 0)
-		{
-			this.position.x -= 1;
-			this.move(0,-1,0);
-		}
-		else if (Input.GetKeyDown(KeyCode.D) && this.position.x <Game.board.numColumns -1)
+		if (Input.GetKeyDown(KeyCode.W) && this.position.x < Game.board.numRows -1)
 		{
 			this.position.x += 1;
+			this.move(1,0,0);
+		}
+		else if (Input.GetKeyDown(KeyCode.S) && this.position.x > 0)
+		{
+			this.position.x -= 1;
+			this.move(-1,0,0);
+		}
+		else if (Input.GetKeyDown(KeyCode.A) && this.position.y > 0)
+		{
+			this.position.y -= 1;
+			this.move(0,-1,0);
+		}
+		else if (Input.GetKeyDown(KeyCode.D) && this.position.y <Game.board.numColumns -1)
+		{
+			this.position.y += 1;
 			this.move(0,1,0);
 		}
-		else if (Input.GetKeyDown(KeyCode.UpArrow) && this.position.y < Game.board.numLevels -1)
+	/*	else if (Input.GetKeyDown(KeyCode.UpArrow) && this.position.y < Game.board.numLevels -1)
 		{
 			this.position.y += 1;
 			this.move(0,0,1);
@@ -60,7 +60,7 @@ public class Cursor : MonoBehaviour {
 			this.position.y -= 1;
 			this.move(0,0,-1);
 		}
-		
+	*/	
 		//selection/confirmation key press
 		else if (Input.GetKeyDown(KeyCode.Space))
 		{
@@ -117,15 +117,9 @@ public class Cursor : MonoBehaviour {
 	/// </param>
 	public void move(int delRow, int delCol, int delLevel)
 	{
-		print(this.position);
-		this.transform.Translate(new Vector3(delCol, delLevel, delRow));
-		if (delLevel != 0)
-		{
-			Debug.Log(this.cam.camera.nearClipPlane);
-			this.cam.transform.Translate(new Vector3(0, delLevel,0));
-			Debug.Log (this.camera.transform.position.y);
 
-		}
+		this.transform.Translate(new Vector3(delCol, delLevel, delRow));
+
 		return;
 	}
 	

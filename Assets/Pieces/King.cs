@@ -14,6 +14,7 @@ public class King: Piece
 	/// <returns>bool indicating if the move was successful</returns>
 	public override bool Move(Vector3 target)
 	{
+		Debug.Log ("Moving King");
 		// TODO Fill me in.
 		if (Game.board.getSpace(target).piece == null)
 		{
@@ -73,6 +74,6 @@ public class King: Piece
 	public override bool Rotate(int direction)
 	{
 		//stub code.
-		return true;
+		return false;
 	}
 }
