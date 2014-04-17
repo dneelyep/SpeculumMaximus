@@ -116,15 +116,6 @@ public class Cursor : MonoBehaviour {
 
 		this.transform.Translate(new Vector3(delCol, delLevel, delRow));
 
-<<<<<<< HEAD
-		return;
-	}
-	
-	
-=======
-		}
->>>>>>> e9b626fafd1cc1cb0acf4811484ee9a70a5decf3
-
 		// Highlight the cursor appropriately, depending on which (if
 		// any) pieces the cursor is over top of.
 		if (Game.board.getSpace(this.position).piece != null) {
@@ -136,10 +127,15 @@ public class Cursor : MonoBehaviour {
 			} else {
 				this.renderer.material.color = Color.red;
 			}
-		} else {
+		}
+		else {
 			this.renderer.material.color = Color.green;
 		}
 
 		return;
-	}				
+	}		
+
+
+
+		
 }
