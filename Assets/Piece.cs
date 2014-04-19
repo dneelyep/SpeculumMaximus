@@ -41,9 +41,41 @@ public abstract class Piece : MonoBehaviour
 	}
 	
 	
-	public abstract bool Move (Vector3 newPosition);
+	public virtual bool Move (Vector3 newPosition)
+	{
+		//check if the target position is not too far away
+		//since the max valid distanct is SQRT(3), and the min invalid distance is 2, this comparison works
+		if ((newPosition-this.position).magnitude >= 2)
+		{
+			Debug.Log(string.Format("Move from {0} to {1} failed: too far",this.position, newPosition));
+			return false;
+		}
+		//check if space is occupied
+		else if (Game.board.getSpace(newPosition).piece != null)
+		{
+			Debug.Log(string.Format("Move from {0} to {1} failed: space occupied",this.position, newPosition));
+			return false;
+		}
+		
+		else
+		{
+			Debug.Log(string.Format("Move from {0} to {1} successful",this.position, newPosition));
+
+			this.MovePhys(newPosition);
+			Game.board.getSpace(this.position).piece = null;
+			Game.board.getSpace(newPosition).piece = this;
+			this.position = newPosition;
+			return true;
+		}
+		return false;
+		
+	}
 	
-	public abstract bool Rotate(int direction);
+	public virtual bool Rotate(int direction)
+	{
+		this.RotatePhys(direction);
+		return true;
+	}
 
 	/// <summary>
 	/// Move the piece in world space
@@ -60,7 +92,7 @@ public abstract class Piece : MonoBehaviour
 	protected void MovePhys (Vector3 newPosition)
 	{
 		//get the new position
-		target = new Vector3(this.transform.position.x + newPosition.y - this.position.y, this.transform.position.y + newPosition.z - this.position.z, this.position.z + newPosition.x - this.position.x);
+		target = new Vector3(this.transform.position.x + newPosition.y - this.position.y, this.transform.position.y + newPosition.z - this.position.z, this.transform.position.z + newPosition.x - this.position.x);
 		t = 0;
 		Game.CurrentState = Game.State.FiringLaser;
 		return;

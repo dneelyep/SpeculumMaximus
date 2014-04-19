@@ -12,25 +12,7 @@ public class King: Piece
 	/// </summary>
 	/// <param name="target">Coordinates of the square piece is moveing to</param>
 	/// <returns>bool indicating if the move was successful</returns>
-	public override bool Move(Vector3 target)
-	{
-		Debug.Log ("Moving King");
-		// TODO Fill me in.
-		if (Game.board.getSpace(target).piece == null)
-		{
-			Game.board.getSpace(this.position).piece = null;
-			this.MovePhys(target);
-			Game.board.getSpace(target).piece = this;
-			return true;
-		}
-		//physically moves the piece
-		// TODO Probably would be good to add an
-		//      override for MovePhys that takes
-		//      in a Vector3, rather than this nasty casting, etc.
-		
-		return false;
-
-	}
+	
 
 	// TODO Do we want to implement this functionality eventually?
 	/*public override List<Square> GetValidMoves(Board board)
