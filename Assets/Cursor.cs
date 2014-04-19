@@ -18,6 +18,7 @@ public class Cursor : MonoBehaviour {
 		Game.currentPlayer = Team.White;
 		Game.CurrentState = Game.State.Selecting;
 		Game.board = new Board();
+		Game.endGame = FindObjectOfType<GameOver>();
 		cam = GameObject.Find("Main Camera");
 		if (cam == null)
 			Debug.LogError("camera not found");

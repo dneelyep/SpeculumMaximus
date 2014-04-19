@@ -20,10 +20,8 @@ public class Laser : Piece {
 	
 	public void fire()
 	{
-		//TODO: fill this code in
-		Debug.Log("TODO Comment this code out to get the build working - fix me!");
-		bolt = (LaserBolt) Instantiate( Resources.Load("Bolt",typeof(LaserBolt)),this.transform.position, Quaternion.identity);
-		//TODO: customiz this so the bolt goes in the right direction
+
+		bolt = (LaserBolt)Instantiate( Resources.Load("Prefabs/Bolt", typeof(LaserBolt)),this.transform.position,Quaternion.identity);
 		bolt.direction = new Vector3(1,0,0);
 	}
 	
