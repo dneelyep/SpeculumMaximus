@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 
 public class Laser : Piece {
 
@@ -22,7 +22,25 @@ public class Laser : Piece {
 	{
 
 		bolt = (LaserBolt)Instantiate( Resources.Load("Bolt", typeof(LaserBolt)),this.transform.position,Quaternion.identity);
-		bolt.direction = new Vector3(0,0,1);
+		print (this.transform.eulerAngles);
+		print ((int)(this.transform.eulerAngles.y) % 360);
+		switch((int)(this.transform.eulerAngles.y) % 360)
+		{
+		case 0:
+			bolt.direction = new Vector3(0,0,1);
+			break;
+		case 90:
+			bolt.direction = new Vector3(1,0,0);
+			break;
+		case 180:
+			bolt.direction = new Vector3(0,0,-1);
+			break;
+		case 270:
+			bolt.direction = new Vector3(-1,0,0);
+			break;
+		default:
+			throw new Exception("Angle is negative. Fix the code");
+		}
 	}
 	
 }
