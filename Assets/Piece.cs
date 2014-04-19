@@ -25,15 +25,17 @@ public abstract class Piece : MonoBehaviour
 	protected Vector3 target;
 	protected Quaternion rotTarget;
 	private float t=1.0f;
-	private Vector3 oldLoc;
-	private Quaternion oldRot;
+	public Vector3 oldLoc;
+	public Quaternion oldRot;
 	
 	
 	
 	void Start()
 	{
-		Debug.Log (this.transform.position);
+		
 		oldLoc = this.transform.position;
+		print (oldLoc);
+		print ("oldLoc set");
 		target = oldLoc;
 		oldRot = this.transform.rotation;
 		rotTarget = oldRot;
@@ -73,21 +75,18 @@ public abstract class Piece : MonoBehaviour
 	
 	public virtual bool Rotate(int direction)
 	{
+		Debug.Log("rotating");
+		oldLoc = this.transform.position;
+		oldRot =this.transform.rotation;
 		this.RotatePhys(direction);
 		return true;
 	}
 
 	/// <summary>
-	/// Move the piece in world space
+	/// move the piece in world space
 	/// </summary>
-	/// <param name='row'>
-	/// New row
-	/// </param>
-	/// <param name='column'>
-	/// New Column
-	/// </param>
-	/// <param name='level'>
-	/// New Level
+	/// <param name='newPosition'>
+	/// New logical position.
 	/// </param>
 	protected void MovePhys (Vector3 newPosition)
 	{
@@ -106,6 +105,8 @@ public abstract class Piece : MonoBehaviour
 	/// </param>
 	protected void RotatePhys (int direction)
 	{
+		target = this.transform.position;
+		Debug.Log( System.String.Format("OldLoc:{0}  NewLoc:{1}",oldLoc,target));
 		rotTarget = Quaternion.Euler(0,90 * direction,0) * this.transform.rotation;
 		t = 0;
 		Game.CurrentState = Game.State.FiringLaser;
@@ -116,7 +117,6 @@ public abstract class Piece : MonoBehaviour
 	{
 		if (t < 1.0)
 		{
-			Debug.Log("moving");
 			t+= Time.deltaTime * moveRate;
 			this.transform.position = Vector3.Lerp(this.oldLoc,this.target, t);
 			this.transform.rotation = Quaternion.Slerp(this.oldRot, this.rotTarget, t);

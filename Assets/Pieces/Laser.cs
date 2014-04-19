@@ -21,12 +21,8 @@ public class Laser : Piece {
 	public void fire()
 	{
 
-		bolt = (LaserBolt)Instantiate( Resources.Load("Prefabs/Bolt", typeof(LaserBolt)),this.transform.position,Quaternion.identity);
-		bolt.direction = new Vector3(1,0,0);
+		bolt = (LaserBolt)Instantiate( Resources.Load("Bolt", typeof(LaserBolt)),this.transform.position,Quaternion.identity);
+		bolt.direction = new Vector3(0,0,1);
 	}
 	
-	public override bool Rotate(int direction)
-	{
-		return true;
-	}
 }
