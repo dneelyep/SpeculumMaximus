@@ -32,9 +32,8 @@ public class Board{
 		Vector3 pos;
 		foreach(Piece piece in pieces)
 		{
-			Debug.Log(piece.ToString());
 			pos = piece.position;
-			board[(int) pos.y, (int) pos.x, (int) pos.z].piece = piece;
+			board[(int) pos.x, (int) pos.y, (int) pos.z].piece = piece;
 		}
 		
 		Debug.Log("board loaded");
