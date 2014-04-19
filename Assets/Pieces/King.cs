@@ -42,10 +42,10 @@ public class King: Piece
 		switch (this.team)
 		{
 		case (Team.Black):
-			Game.currentPlayer = Team.White;
+			Game.endGame.signalWinner(Team.White);
 			break;
 		case (Team.White):
-			Game.currentPlayer = Team.White;
+			Game.endGame.signalWinner(Team.Black);
 			break;
 		default:
 			throw new Exception("An unknown team's King has been destroyed. You broke the game somehow.");
