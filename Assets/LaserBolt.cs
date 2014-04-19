@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LaserBolt : MonoBehaviour {
 
-	public float vel = .1f;
+	public float vel = 5f;
 	public Vector3 direction = new Vector3(0,0,0);
 	
 	// Use this for initialization
@@ -13,7 +13,7 @@ public class LaserBolt : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.transform.Translate(vel * direction);
+		this.transform.Translate(direction * vel * Time.deltaTime);
 
 		//if laser leaves board, destroy it
 		if (this.transform.position.x > 10.5 || this.transform.position.z > 10.5 || this.transform.position.x <-0.5 || this.transform.position.z <-0.5)

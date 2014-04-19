@@ -19,9 +19,7 @@ public class Cursor : MonoBehaviour {
 		Game.CurrentState = Game.State.Selecting;
 		Game.board = new Board();
 		Game.endGame = FindObjectOfType<GameOver>();
-		cam = GameObject.Find("Main Camera");
-		if (cam == null)
-			Debug.LogError("camera not found");
+
 	}
 	
 	// Update is called once per frame
@@ -82,14 +80,12 @@ public class Cursor : MonoBehaviour {
 		//rotation
 		else if (Game.CurrentState == Game.State.Moving && Input.GetKeyDown(KeyCode.LeftArrow))
 		{
-			Debug.Log("Code commented out to get the build working - fix me!");
-			//currentPiece.Rotate(-1);
+			currentPiece.Rotate(-1);
 		}
 		
 		else if (Game.CurrentState == Game.State.Moving && Input.GetKeyDown(KeyCode.RightArrow))
 		{
-			Debug.Log("Code commented out to get the build working - fix me!");
-			//currentPiece.Rotate(1);
+			currentPiece.Rotate(1);
 		}
 		
 		//cancel move
