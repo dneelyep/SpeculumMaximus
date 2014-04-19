@@ -116,11 +116,8 @@ public class Cursor : MonoBehaviour {
 		// Highlight the cursor appropriately, depending on which (if
 		// any) pieces the cursor is over top of.
 		if (Game.board.getSpace(this.position).piece != null) {
-			Debug.Log("Found a piece!");
-			// TODO Here, we should check if the team's piece is a
-			//      member of the player's team or not.
-			if (Game.board.getSpace(this.position).piece.team == Team.Black) {
-				this.renderer.material.color = Color.yellow;
+			if (Game.board.getSpace(this.position).piece.team == Game.currentPlayer) {
+				this.renderer.material.color = Color.blue;
 			} else {
 				this.renderer.material.color = Color.red;
 			}
