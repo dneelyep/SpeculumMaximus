@@ -17,7 +17,7 @@ public class LaserBolt : MonoBehaviour {
 
 		//if laser leaves board, destroy it
 		if (this.transform.position.x > 10.5 || this.transform.position.z > 10.5 || this.transform.position.x <-0.5 || this.transform.position.z <-0.5)
-			Destroy(this);
+			Destroy(this.gameObject);
 		if (this.transform.position.y >4 || this.transform.position.y < 0)
 			throw new UnityException("laser flew off in z direction. It shouldn't do that");
 	}

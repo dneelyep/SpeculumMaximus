@@ -34,7 +34,7 @@ public class King: Piece
 	{
 		Destroy(other.gameObject);
 
-		Destroy(this);
+		Destroy(this.gameObject);
 	}
 
 	void OnDestroy()
@@ -55,7 +55,6 @@ public class King: Piece
 	
 	public override bool Rotate(int direction)
 	{
-		//stub code.
 		return false;
 	}
 }
