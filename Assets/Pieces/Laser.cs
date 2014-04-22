@@ -22,8 +22,6 @@ public class Laser : Piece {
 	{
 
 		bolt = (LaserBolt)Instantiate( Resources.Load("Bolt", typeof(LaserBolt)),this.transform.position,Quaternion.identity);
-		print (this.transform.eulerAngles);
-		print ((int)(this.transform.eulerAngles.y) % 360);
 		switch((int)(this.transform.eulerAngles.y) % 360)
 		{
 		case 0:

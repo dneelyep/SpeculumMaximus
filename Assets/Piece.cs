@@ -34,8 +34,6 @@ public abstract class Piece : MonoBehaviour
 	{
 		
 		oldLoc = this.transform.position;
-		print (oldLoc);
-		print ("oldLoc set");
 		target = oldLoc;
 		oldRot = this.transform.rotation;
 		rotTarget = oldRot;
@@ -75,7 +73,6 @@ public abstract class Piece : MonoBehaviour
 	
 	public virtual bool Rotate(int direction)
 	{
-		Debug.Log("rotating");
 		oldLoc = this.transform.position;
 		oldRot =this.transform.rotation;
 		this.RotatePhys(direction);
@@ -106,7 +103,6 @@ public abstract class Piece : MonoBehaviour
 	protected void RotatePhys (int direction)
 	{
 		target = this.transform.position;
-		Debug.Log( System.String.Format("OldLoc:{0}  NewLoc:{1}",oldLoc,target));
 		rotTarget = Quaternion.Euler(0,90 * direction,0) * this.transform.rotation;
 		t = 0;
 		Game.CurrentState = Game.State.FiringLaser;
