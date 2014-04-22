@@ -51,9 +51,9 @@ public abstract class Piece : MonoBehaviour
 			return false;
 		}
 		//check if space is occupied
-		else if (Game.board.getSpace(newPosition).piece != null)
+		else if (Game.board.getSpace(newPosition).piece != null || !Game.board.getSpace(newPosition).canEnter(this.team))
 		{
-			Debug.Log(string.Format("Move from {0} to {1} failed: space occupied",this.position, newPosition));
+			Debug.Log(string.Format("Move from {0} to {1} failed: can't enter",this.position, newPosition));
 			return false;
 		}
 		
