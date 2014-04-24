@@ -39,6 +39,7 @@ public class King: Piece
 
 	void OnDestroy()
 	{
+		try{
 		switch (this.team)
 		{
 		case (Team.Black):
@@ -51,6 +52,8 @@ public class King: Piece
 			throw new Exception("An unknown team's King has been destroyed. You broke the game somehow.");
 		}
 		Game.CurrentState = Game.State.Victory;
+		}
+		catch (Exception e){}
 	}
 	
 	public override bool Rotate(int direction)

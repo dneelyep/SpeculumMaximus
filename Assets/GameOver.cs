@@ -9,7 +9,8 @@ using UnityEngine;
 /// </summary>
 public class GameOver : MonoBehaviour
 {
-	private Team? gameWinner = null;
+	public Team? gameWinner = null ;
+	public Transform cursor;
 		
 	/// <summary>
 	/// Signals that the provided Team won the game, and
@@ -24,12 +25,16 @@ public class GameOver : MonoBehaviour
 	public void signalWinner(Team team)
 	{
 		gameWinner = team;
+		this.gameObject.GetComponent<TextMesh>().text = team.ToString() +"\nWins";
+		this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+		this.transform.position = cursor.transform.position + new Vector3(-3,0,2);
 	}
 	
 	void Update()
 	{
 		if (gameWinner != null)
 		{
+
 			if (Input.anyKey)
 			{
 				Application.LoadLevel("MainMenu");
@@ -37,7 +42,7 @@ public class GameOver : MonoBehaviour
 		}
 	}
 
-	public void OnGUI()
+	/*public void OnGUI()
 	{
 		if (gameWinner != null)
 		{
@@ -45,7 +50,7 @@ public class GameOver : MonoBehaviour
 			GUI.Label (new Rect (Screen.width / 2, Screen.height / 2, 100, 100),
 			           gameWinner.ToString() + " won the game!");
 		}
-	}
+	}*/
 }
 
 
